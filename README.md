@@ -1,5 +1,10 @@
 # SpaStore
 
+Product store with Authentication and Authorization enabled through
+OAuth 2 and OpenID Connect.
+If you're interacting with Identity Server 4, which is the intent of this app, you should to run it in the port that matches your Identity Server client configuration, like so:
+ng serve --port 5003
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
 ## Development server
