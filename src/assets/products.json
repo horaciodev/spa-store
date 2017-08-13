@@ -1,0 +1,98 @@
+[
+  {
+    "id": "10",
+    "price": 80,
+    "name": "Greens",
+    "description": "Looking for simple, holistic treatment for your muscles? Search no more",
+    "features": [
+      {
+        "name": "Back & Neck",
+        "percentage": 50
+      },
+      {
+        "name": "Arms & Legs",
+        "percentage": 20
+      },
+      {
+        "name": "Feet",
+        "percentage": 20
+      },
+      {
+        "name": "Hands",
+        "percentage": 10
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "price": 100,
+    "name": "Citrus",
+    "description": "Natural face treatment with seasonal fruits, vegetables clay from hot springs.",
+    "features": [
+      {
+        "name": "clay",
+        "percentage": 30
+      },
+      {
+        "name": "pineapple",
+        "percentage": 20
+      },
+      {
+        "name": "apple",
+        "percentage": 20
+      },
+      {
+        "name": "mint",
+        "percentage": 20
+      },
+      {
+        "name": "lemon",
+        "percentage": 10
+      }
+    ]
+  },
+  {
+    "id": "30",
+    "price": 70,
+    "name": "Roots",
+    "description": "Best pedicure ever. This treatment will make you feel rejuvenated.",
+    "features": [
+      {
+        "name": "Feet",
+        "percentage": 70
+      },
+      {
+        "name": "Ankles",
+        "percentage": 30
+      }
+    ]
+  },
+  {
+    "id": "40",
+    "price": 65,
+    "name": "Orange",
+    "description": "Sauna with your favorite organic iced tea surrounded by spices aroma therapy.",
+    "features": [
+      {
+        "name": "Body",
+        "percentage": 100
+      }
+    ]
+  },
+  {
+    "id": "50",
+    "price": 120,
+    "name": "Coconut",
+    "description": "Hot Rock Treatment while partially submerged in salt water",
+    "features": [
+      {
+        "name": "Back & Neck",
+        "percentage": 70
+      },
+      {
+        "name": "Chest",
+        "percentage": 30
+      }
+    ]
+  }
+]
