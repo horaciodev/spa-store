@@ -1,15 +1,28 @@
 <nav class="navbar navbar-toggleable-md navbar-inverse navbar-dark bg-inverse fixed-top">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
   <a class="navbar-brand" href="#">SPA Store</a>
-  <ul class="nav navbar-nav pull-right">
-    <li class="nav-item">
-      <a class="nav-link" href="https://angular.io">
-        <i class="fa fa-medium" aria-hidden="true"></i>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="https://github.com/horaciodev">
-        <i class="fa fa-github" aria-hidden="true"></i>
-      </a>
-    </li>
-  </ul>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="https://angular.io">
+          <i class="fa fa-medium" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/horaciodev">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+    <ul *ngIf="_user" class="navbar-nav justify-content-end">
+      <li class="nav-item dropdown">
+        <span class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello {{userName}}</span>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" (click)="startSignoutMainWindow()">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
 </nav>

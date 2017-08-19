@@ -17,7 +17,7 @@ export class PopulatedCartRouteGuard implements CanActivate {
                                   .subscribe((cart)=>{
                                       if(cart.items.length === 0){
                                         observer.next(false);
-                                        this.router.navigate(["/"]);
+                                        this.router.navigate(["/storefront"]);
                                       } else {
                                         observer.next(true);
                                       }

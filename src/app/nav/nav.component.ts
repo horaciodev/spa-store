@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from 'app/shared/services/auth.service';
+
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-nav',
@@ -6,7 +9,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  constructor() {  }
+  private loadedUserSubscription: Subscription;
+  _user: any;
+  userName :string;
 
-  ngOnInit() {}
+  constructor(private authSvc: AuthService) {  }
+
+  ngOnInit() {
+    this.loadedUserSubscription = this.authSvc.userLoadedEvent.subscribe(user=>{
+        this._user = user;
+        this.userName = this._user.profile.name;
+    });
+  }
+
+  startSignoutMainWindow() {
+    this.authSvc.startSignoutMainWindow();
+  }
+
+  public ngOnDestroy(): void {
+    if(this.loadedUserSubscription){
+      this.loadedUserSubscription.unsubscribe();
+    }
+  }
 }
