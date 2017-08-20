@@ -1,8 +1,12 @@
+
 .navbar-nav > li > .dropdown-menu
 {
-background-color: #292b2c;
+width: 100%; 
+background-color: #343a40;
 color: rgba(255, 255, 255, 0.5);
 }
+
+
 
 .navbar-nav > li > .dropdown-menu >a:hover
 {
