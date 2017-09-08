@@ -45,8 +45,9 @@ export class CheckoutComponent implements OnInit {
     this.deliveryOptions = this.deliveryOptionsService.all();
     this.cart = this.shoppingCartService.get();
     this.cartSubscription = this.cart.subscribe((cart) => {
+      let productIds = cart.getProductIdsFromCart();
       this.itemCount = cart.items.map((x) => x.quantity).reduce((p, n) => p + n, 0);
-      this.productsService.all().subscribe((products) => {
+      this.productsService.getMultipleById(productIds).subscribe((products) => {
         this.products = products;
         this.cartItems = cart.items
                            .map((item) => {

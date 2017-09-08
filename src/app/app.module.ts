@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { CategoryComponent } from './category/category.component';
 import { UnauthorizedComponent } from "./unauthorized/unauthorized.component";
 import { authProviders, AppRoutingModule } from './app.routing';
 import { CheckoutComponent } from './checkout/checkout.component';
@@ -18,6 +19,7 @@ import { PopulatedCartRouteGuard } from "./shared/route-guards/populated-cart.ro
 //import { AuthGuardService } from "./shared/route-guards/auth-guard.service";
 import { DeliveryOptionsDataService } from "./shared/services/delivery-options.service";
 import { ProductsDataService } from "./shared/services/products.service";
+import { ProductCategoryService } from "./shared/services/product-category.service";
 import { ShoppingCartService } from "./shared/services/shopping-cart.service";
 import { LocalStorageService, StorageService } from "./shared/services/storage.service";
 
@@ -27,6 +29,7 @@ import { LocalStorageService, StorageService } from "./shared/services/storage.s
     NavComponent,
     FooterComponent,
     WelcomeComponent,
+    CategoryComponent,
     UnauthorizedComponent,
     CheckoutComponent,
     OrderConfirmationComponent,
@@ -41,6 +44,7 @@ import { LocalStorageService, StorageService } from "./shared/services/storage.s
   ],
   providers: [
     ProductsDataService,
+    ProductCategoryService,
     DeliveryOptionsDataService,
     PopulatedCartRouteGuard,
     authProviders,

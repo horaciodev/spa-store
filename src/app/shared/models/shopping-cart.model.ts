@@ -14,4 +14,15 @@ export class ShoppingCart {
     this.deliveryTotal = src.deliveryTotal;
     this.itemsTotal = src.itemsTotal;
   }
+
+  public getProductIdsFromCart(): string{
+    let productIdsString = '';
+    for(let item of this.items){
+       productIdsString = productIdsString.concat(item.productId).concat(',');
+    }
+    if(productIdsString.length>0)
+      productIdsString = productIdsString.substring(0,productIdsString.length-1);
+
+    return productIdsString;
+  }
 }

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8 col-sm-12">
-    <h3>Select Product</h3>
+    <h4>Select Product</h4>
     <ul class="product-list">
       <li *ngFor="let product of products | async"
           class="product-container">
@@ -14,25 +14,15 @@
                 <span class="text--bold js-product-name">{{product.name}}</span>
                 <small class="product_price js-product-price">{{product.price | currency:'USD':true}}</small>
               </h4>
-              <p class="js-product-desc">{{product.description}}</p>
-              <!--
-              <p>
-                <span class="font-weight-bold">Features:</span>
-                <br/>
-                <span *ngFor="let feature of product.features ">
-                  {{feature.name}} ({{feature.percentage}}%)
-                  <br/>
-                </span>
-              </p>
-              -->
+              <p class="js-product-desc">{{product.description}}</p>            
               <p>
                 <button type="button"
                         class="btn btn-success btn-lg js-btn-add"
-                        (click)="addProductToCart(product, 1)">Add To Cart</button>
+                        (click)="addProductToCart(product)">Add To Cart</button>
                 <button type="button"
                         class="btn btn-sm js-btn-remove"
                         *ngIf="productInCart(product) | async"
-                        (click)="removeProductFromCart(product, 1)">Remove item from cart</button>
+                        (click)="removeProductFromCart(product)">Remove item from cart</button>
               </p>
             </div>
           </div>

@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="dropdown col-md-4 col-sm-12">
+    <button class="btn btnSecondary dropdown-toggle btn-block" type="button" id="dropdownCategoryButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       {{currentCategory?.description || 'Please Select Category' }}
+    </button>
+    <div class="dropdown-menu" aria-label="dropdownCategoryButton">
+      <button *ngFor="let prodCat of productCategories | async"
+        class="dropdown-item"
+        (click)="onSelect(prodCat)"
+        type="button">
+        {{prodCat.description}}
+      </button>
+    </div>
+  </div>
+</div>
+<app-store-front [category]="currentCategory"></app-store-front>

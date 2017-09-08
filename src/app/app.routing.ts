@@ -5,6 +5,7 @@ import { CheckoutComponent } from "./checkout/checkout.component";
 import { OrderConfirmationComponent } from "./order-confirmation/order-confirmation.component";
 import { StoreFrontComponent } from "./store-front/store-front.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
+import { CategoryComponent } from './category/category.component';
 import { UnauthorizedComponent } from "./unauthorized/unauthorized.component";
 import { PopulatedCartRouteGuard } from './shared/route-guards/populated-cart.route-guard';
 import { AuthService } from "./shared/services/auth.service";
@@ -24,7 +25,7 @@ const appRoutes: Routes = [
   },
   {
     canActivate: [AuthGuardService],
-    component: StoreFrontComponent,
+    component: CategoryComponent,
     path: "storefront"
   },
   {

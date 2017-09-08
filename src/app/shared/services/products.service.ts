@@ -8,26 +8,35 @@ import { AuthService } from  "./auth.service";
 let count = 0;
 
 @Injectable()
-export class ProductsDataService extends CachcingServiceBase {
+export class ProductsDataService {
 
-  private static readonly _productsApiUrl = "http://localhost:5001/api/v1/product/category/1";
+  private static readonly _productsApiUrl = "http://localhost:5001/api/v1/product/category/";
+  private static readonly _productsByIdMultiApiUrl = "http://localhost:5001/api/v1/product/multi/";
 
-  private products: Observable<Product[]>;
+  //private products: Observable<Product[]>;
 
   public constructor(private authSvc: AuthService) {
-    super();
+    //super();
   }
 
-  public all(): Observable<Product[]> {
-    return this.cache<Product[]>(() => this.products,
-                                 (val: Observable<Product[]>) => this.products = val,
-                                 () => this.authSvc.AuthGet(ProductsDataService._productsApiUrl)
-                                           .map((response) => response.json()
-                                                                      .map((item) => {
-                                                                        let model = new Product();
-                                                                        model.updateFrom(item);
-                                                                        return model;
-                                                                      })));
+  public all(categoryId = "2"): Observable<Product[]> {
+    //console.log('called service: ' + categoryId);
+    return this.authSvc.AuthGet(ProductsDataService._productsApiUrl + categoryId)
+                               .map((response) => response.json()
+                                                          .map((item) => {
+                                                            let model = new Product();
+                                                            model.updateFrom(item);
+                                                            return model;
+                                                          }));
+  }
 
+  public getMultipleById(productIds : string): Observable<Product[]> {
+    return this.authSvc.AuthGet(ProductsDataService._productsByIdMultiApiUrl + productIds)
+    .map((response) => response.json()
+                               .map((item) => {
+                                 let model = new Product();
+                                 model.updateFrom(item);
+                                 return model;
+                               }));
   }
 }

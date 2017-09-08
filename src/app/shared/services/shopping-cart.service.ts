@@ -19,12 +19,13 @@ export class ShoppingCartService {
   private products: Product[];
   private deliveryOptions: DeliveryOption[];
 
+
   public constructor(private storageService: StorageService,
                      private productService: ProductsDataService,
                      private deliveryOptionsService: DeliveryOptionsDataService) {
 
    this.storage = this.storageService.get();
-   this.productService.all().subscribe((prods) => this.products = prods);
+   //this.productService.all().subscribe((prods) => this.products = prods);
    this.deliveryOptionsService.all().subscribe((opts) => this.deliveryOptions = opts);
 
    this.subscriptionObservable = new Observable<ShoppingCart>((observer: Observer<ShoppingCart> ) =>{
@@ -43,6 +44,7 @@ export class ShoppingCartService {
 
   public addItem(product: Product, quantity: number): void {
     const cart = this.retrieve();
+
     let item = cart.items.find((p) => p.productId === product.id);
     if (item === undefined) {
       item = new CartItem();
@@ -51,14 +53,21 @@ export class ShoppingCartService {
     }
 
     item.quantity += quantity;
+
     cart.items = cart.items.filter((cartItem) => cartItem.quantity > 0);
     if (cart.items.length === 0) {
       cart.deliveryOptionId = undefined;
     }
 
-    this.calculateCart(cart);
-    this.save(cart);
-    this.dispatch(cart);
+    let p = this.calculateCart(cart).then((val)=>{
+      this.save(cart);
+      this.dispatch(cart);
+      console.log('cart.grossTotal: ' + cart.grossTotal);
+      console.log('val: ' + val);
+    }).
+    catch(()=>{
+      Promise.reject(0);
+    });
   }
 
   public empty(): void {
@@ -70,19 +79,28 @@ export class ShoppingCartService {
   public setDeliveryOption(deliveryOption: DeliveryOption): void {
     const cart = this.retrieve();
     cart.deliveryOptionId = deliveryOption.id;
-    this.calculateCart(cart);
-    this.save(cart);
+    this.calculateCart(cart).then(()=>{ this.save(cart); });
     this.dispatch(cart);
 }
 
-private calculateCart(cart: ShoppingCart): void {
-    cart.itemsTotal = cart.items
-                          .map((item) => item.quantity * this.products.find((p) => p.id === item.productId).price)
-                          .reduce((previous, current) => previous + current, 0);
-    cart.deliveryTotal = cart.deliveryOptionId ?
-                          this.deliveryOptions.find((x) => x.id === cart.deliveryOptionId).price :
-                          0;
-    cart.grossTotal = cart.itemsTotal + cart.deliveryTotal;
+private calculateCart(cart: ShoppingCart): Promise<number> {
+    console.log('inside calculateCart');
+    let productIds = cart.getProductIdsFromCart();
+
+    return new Promise<number>(resolve =>{
+        this.getCartProducts(productIds).then(()=>{
+          cart.itemsTotal = cart.items
+                                .map((item) => item.quantity * this.products.find((p) => p.id === item.productId).price)
+                                .reduce((previous, current) => previous + current, 0);
+          cart.deliveryTotal = cart.deliveryOptionId ?
+                                this.deliveryOptions.find((x) => x.id === cart.deliveryOptionId).price :
+                                0;
+          cart.grossTotal = cart.itemsTotal + cart.deliveryTotal;
+          console.log('total:' + cart.grossTotal);
+          resolve(cart.grossTotal);
+          });
+
+        });
   }
 
   private retrieve(): ShoppingCart {
@@ -94,6 +112,7 @@ private calculateCart(cart: ShoppingCart): void {
 
      return cart;
    }
+
 
    private save(cart: ShoppingCart): void {
     this.storage.setItem(CART_KEY, JSON.stringify(cart));
@@ -109,4 +128,28 @@ private calculateCart(cart: ShoppingCart): void {
           }
         });
   }
+
+  private getCartProducts(productIds: string): Promise<void>{
+    if(productIds.length == 0){
+      return new Promise<void>(resolve =>{
+          console.log('0.length.getCartProducts(' + productIds +')' )
+          resolve();
+      });
+    }
+
+    return new Promise<void>(resolve =>{
+      this.productService.getMultipleById(productIds)
+          .subscribe((prods) => {
+                                  this.products = prods;
+                                },
+                                (error) =>  { console.log('error: productService.getMultipleById');},
+                                () => {
+                                  resolve();
+                                  console.log('getCartProducts(' + productIds +')' );
+                                }
+                              );
+
+    });
+  }
+
 }
